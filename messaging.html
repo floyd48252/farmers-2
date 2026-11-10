@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FARMERS Community - Messages</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#050807;color:#e8f5ef;margin:0}
+header{background:#07100c;color:#00c878;padding:15px 18px;border-bottom:1px solid rgba(0,200,120,.18);font-size:20px;font-weight:bold}
+header a{color:#00c878;text-decoration:none;font-size:13px;margin-right:12px}
+#chat{padding:15px;height:calc(100vh - 142px);overflow-y:auto;display:flex;flex-direction:column;gap:8px}
+.msg{background:#09130f;border:1px solid rgba(0,200,120,.15);padding:10px 12px;border-radius:10px;max-width:80%;width:max-content}
+.msg.mine{align-self:flex-end;background:#00c878;color:#031109;border-color:#00c878}
+.msg b{color:#00c878;font-size:13px}
+.msg.mine b{color:#031109}
+.msg small{color:#83938b;font-size:11px}
+.msg.mine small{color:#0b4b2f}
+#box{display:flex;padding:10px;background:#07100c;border-top:1px solid rgba(0,200,120,.18);position:fixed;bottom:0;left:0;right:0;gap:8px}
+input{flex:1;min-width:0;padding:12px;border:1px solid rgba(0,200,120,.18);border-radius:20px;background:#0d1b15;color:white;outline:none}
+button{background:#00c878;color:#031109;border:none;padding:12px 16px;border-radius:20px;font-weight:bold;cursor:pointer}
+button.voice{background:#163625;color:#00c878}
+.status{padding:6px 15px;color:#83938b;font-size:12px;text-align:center}
+@media(max-width:500px){#box{flex-wrap:wrap}#nameDisplay{max-width:none!important;width:100%}.msg{max-width:92%}}
+</style>
+</head>
+<body>
+<header>
+<a href="community.html">← Community</a>
+🌾 FARMERS Community Chat
+</header>
+<div class="status" id="status">Connecting...</div>
+<div id="chat"></div>
+
+<div id="box">
+  <input id="nameDisplay" placeholder="Registered farmer name" style="max-width:150px" readonly>
+  <input id="msgInput" placeholder="Type message...">
+  <button type="button" class="voice" id="voiceButton" title="Speak a message">🎤</button>
+  <button id="sendButton" type="button">Send</button>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC6WJeWfxuU1s0xOik03gyH6k2uLPr7rLk",
+  authDomain: "farmers-community-35372.firebaseapp.com",
+  projectId: "farmers-community-35372",
+  storageBucket: "farmers-community-35372.firebasestorage.app",
+  messagingSenderId: "275869187795",
+  appId: "1:275869187795:web:c3481fcca21af58c3e1e26",
+  measurementId: "G-0DQDM5XHTS"
+};
+
+const account = JSON.parse(localStorage.getItem("farmersCommunityAccount")) || null;
+if (!account || !account.email) {
+    location.replace("profile.html?communityRegistration=1");
+    throw new Error("Community registration is required.");
+}
+
+document.getElementById("nameDisplay").value = account ? account.name : "Farmer";
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const chatDiv = document.getElementById("chat");
+const statusDiv = document.getElementById("status");
+const msgInput = document.getElementById("msgInput");
+
+const messagesQuery = query(collection(db, "messages"), orderBy("time"));
+
+onSnapshot(messagesQuery, snapshot => {
+    chatDiv.innerHTML = "";
+    snapshot.forEach(messageDoc => {
+        const message = messageDoc.data();
+        const bubble = document.createElement("div");
+        bubble.className = "msg";
+        if (message.senderEmail === account.email) {
+            bubble.classList.add("mine");
+        }
+
+        const sender = document.createElement("b");
+        sender.textContent = message.sender || "Farmer";
+        bubble.appendChild(sender);
+        bubble.appendChild(document.createElement("br"));
+
+        const text = document.createElement("span");
+        text.textContent = message.text || "";
+        bubble.appendChild(text);
+        bubble.appendChild(document.createElement("br"));
+
+        const time = document.createElement("small");
+        time.textContent = new Date(message.time).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+        bubble.appendChild(time);
+        chatDiv.appendChild(bubble);
+    });
+    statusDiv.textContent = snapshot.empty ? "No messages yet. Start the conversation!" : "Connected";
+    chatDiv.scrollTop = chatDiv.scrollHeight;
+}, error => {
+    statusDiv.textContent = "Chat connection error: " + error.message;
+});
+
+async function sendMessage() {
+    const text = msgInput.value.trim();
+    if (!text) return;
+    try {
+        await addDoc(collection(db, "messages"), {
+            text,
+            sender: account.name,
+            senderEmail: account.email,
+            senderRole: account.role || "Farmer",
+            time: Date.now()
+        });
+        msgInput.value = "";
+        msgInput.focus();
+    } catch (error) {
+        statusDiv.textContent = "Message could not be sent: " + error.message;
+    }
+}
+
+document.getElementById("sendButton").addEventListener("click", sendMessage);
+msgInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+document.getElementById("voiceButton").addEventListener("click", () => {
+    if (!SpeechRecognition) {
+        alert("Voice input is not supported by this browser.");
+        return;
+    }
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.onresult = event => {
+        msgInput.value = event.results[0][0].transcript;
+        msgInput.focus();
+    };
+    recognition.start();
+});
+</script>
+</body>
+</html>

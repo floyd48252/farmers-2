@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>FARMERS AI</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<style>
+
+.ai-page {
+
+    width: min(900px,100%);
+
+    margin: auto;
+
+    padding: 20px 14px 115px;
+
+}
+
+
+/* HEADER */
+
+.ai-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px 4px 18px;
+
+}
+
+
+.ai-avatar {
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(0,200,120,.1);
+
+    border:
+        1px solid
+        rgba(0,255,156,.3);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 25px;
+
+}
+
+
+.ai-header strong {
+
+    display: block;
+
+    font-size: 17px;
+
+}
+
+
+.ai-header small {
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+}
+
+
+.ai-status {
+
+    margin-left: auto;
+
+    font-size: 9px;
+
+    color: var(--emerald);
+
+}
+
+
+/* WELCOME */
+
+.ai-welcome {
+
+    text-align: center;
+
+    padding: 25px 10px;
+
+}
+
+
+.ai-welcome-icon {
+
+    font-size: 48px;
+
+    margin-bottom: 10px;
+}
+
+
+.ai-welcome h1 {
+
+    font-size:
+        clamp(25px,7vw,38px);
+}
+
+
+.ai-welcome h1 span {
+
+    color: var(--emerald);
+}
+
+
+.ai-welcome p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    max-width: 550px;
+
+    margin: 10px auto;
+}
+
+
+/* SUGGESTIONS */
+
+.ai-toolbar {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.ai-toolbar-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    border: 1px solid var(--border);
+    background: rgba(12, 23, 18, 0.9);
+    color: var(--muted);
+    border-radius: 12px;
+    padding: 8px 10px;
+    font-size: 9px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.action-button.primary {
+    background: rgba(0,200,120,.12);
+    color: var(--emerald);
+    border-color: rgba(0,255,156,.25);
+}
+
+.action-button:hover {
+    color: var(--emerald);
+    border-color: rgba(0,255,156,.3);
+}
+
+.suggestions {
+
+    display: flex;
+
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding: 5px 2px 15px;
+}
+
+
+.suggestion {
+
+    flex-shrink: 0;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    color: var(--muted);
+
+    border-radius: 18px;
+
+    padding: 9px 12px;
+
+    font-size: 10px;
+}
+
+
+.suggestion:hover {
+
+    color: var(--emerald);
+
+    border-color:
+        rgba(0,255,156,.3);
+}
+
+
+/* CHAT */
+
+.chat {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+
+    min-height: 250px;
+
+    padding-bottom: 15px;
+}
+
+
+.message {
+
+    max-width: 85%;
+
+    padding: 12px 14px;
+
+    border-radius: 15px;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    white-space: pre-wrap;
+}
+
+
+.message.ai {
+
+    align-self: flex-start;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-bottom-left-radius: 4px;
+}
+
+
+.message.user {
+
+    align-self: flex-end;
+
+    background:
+        rgba(0,200,120,.12);
+
+    border:
+        1px solid
+        rgba(0,255,156,.2);
+
+    border-bottom-right-radius: 4px;
+}
+
+
+/* INPUT */
+
+.ai-input-area {
+
+    position: fixed;
+
+    bottom: 55px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(900px,100%);
+
+    padding: 9px 12px;
+
+    background:
+        rgba(5,10,8,.96);
+
+    border-top:
+        1px solid
+        var(--border);
+}
+
+
+.ai-input {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    background: var(--card);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 14px;
+
+    padding: 6px;
+}
+
+
+.ai-input textarea {
+
+    flex: 1;
+
+    resize: none;
+
+    min-width: 0;
+
+    height: 38px;
+
+    max-height: 100px;
+
+    background: none;
+
+    border: none;
+
+    outline: none;
+
+    color: white;
+
+    padding: 10px 7px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+}
+
+
+.ai-input button {
+
+    width: 40px;
+
+    height: 40px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    background: var(--emerald);
+
+    color: #001b0f;
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+
+/* TYPING */
+
+.typing {
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    padding: 5px;
+}
+
+
+@media (min-width:700px) {
+
+    .ai-page {
+
+        padding-left: 25px;
+
+        padding-right: 25px;
+
+    }
+
+}
+
+</style>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+<a
+    href="index.html"
+    class="brand"
+>
+
+<div class="logo">
+    <img class="logo-image" src="crop-rows.jpg" alt="FARMERS logo">
+</div>
+
+<div class="brand-text">
+
+<strong>
+    FARMERS
+</strong>
+
+<span>
+    Agricultural Network
+</span>
+
+</div>
+
+</a>
+
+
+<div class="top-actions">
+
+<span class="status-btn">
+
+<span class="status-dot"></span>
+
+<span id="statusText">
+    Online
+</span>
+
+</span>
+
+
+<a
+    href="index.html"
+    class="menu-btn"
+    style="
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    "
+>
+    ←
+</a>
+
+</div>
+
+</header>
+
+<nav class="primary-nav" aria-label="Primary navigation">
+    <a href="index.html" class="primary-nav-item"><span>Home</span></a>
+    <a href="farm-hub.html" class="primary-nav-item"><span>Farm</span></a>
+    <a href="marketplace.html" class="primary-nav-item"><span>Market</span></a>
+    <a href="agribusiness.html" class="primary-nav-item"><span>Business</span></a>
+    <a href="profile.html" class="primary-nav-item"><span>Profile</span></a>
+</nav>
+
+<main class="ai-page">
+
+
+<!-- AI HEADER -->
+
+<div class="ai-header">
+
+<div class="ai-avatar">
+    <img src="seedlings.jpg" alt="Young plants growing in seed trays">
+</div>
+
+<div>
+
+<strong>
+    FARMERS AI
+</strong>
+
+<small>
+    Agricultural Intelligence
+</small>
+
+</div>
+
+<div
+    class="ai-status"
+    id="aiMode"
+>
+    OFFLINE READY
+</div>
+
+</div>
+
+
+<!-- WELCOME -->
+
+<section
+    class="ai-welcome"
+    id="welcome"
+>
+
+<div class="ai-welcome-icon">
+    <img src="crop-rows.jpg" alt="Rows of crops growing in a field">
+</div>
+
+<h1>
+
+Your farm.
+<br>
+
+Your data.
+<br>
+
+<span>
+    Smarter decisions.
+</span>
+
+</h1>
+
+<p>
+
+Ask me about crops, livestock,
+farm management, agribusiness,
+markets and agricultural
+problems.
+
+</p>
+
+</section>
+
+
+<!-- SUGGESTIONS -->
+
+<div class="ai-toolbar">
+    <div class="ai-toolbar-actions">
+        <button class="action-button primary" id="newChatButton" type="button">New chat</button>
+        <button class="action-button" id="liveModeButton" type="button">Live model</button>
+    </div>
+</div>
+
+<div id="apiConfig" style="display:none; margin-bottom:12px; padding:10px; border:1px solid var(--border); border-radius:12px; background:var(--card);">
+    <div style="display:flex; gap:8px; flex-direction:column;">
+        <input id="apiKeyInput" type="password" placeholder="API key for OpenAI-compatible service" style="padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#07130d; color:#fff; font-size:10px;">
+        <input id="apiEndpointInput" type="text" placeholder="https://api.openai.com/v1/chat/completions" style="padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#07130d; color:#fff; font-size:10px;">
+        <input id="modelInput" type="text" placeholder="Model ID (for example: gpt-4o-mini)" style="padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#07130d; color:#fff; font-size:10px;">
+        <button class="action-button primary" id="saveApiButton" type="button">Save live model settings</button>
+    </div>
+</div>
+
+<div class="suggestions">
+
+<button
+    class="suggestion"
+    data-question="How can I improve my maize yield?"
+>
+    Improve maize yield
+</button>
+
+<button
+    class="suggestion"
+    data-question="How do I calculate farm profit?"
+>
+    Calculate profit
+</button>
+
+<button
+    class="suggestion"
+    data-question="How should I manage my soil?"
+>
+    Soil management
+</button>
+
+<button
+    class="suggestion"
+    data-question="What should I consider before starting poultry farming?"
+>
+    Poultry farming
+</button>
+
+<button
+    class="suggestion"
+    data-question="How do I control pests and diseases in tomatoes?"
+>
+    Pest control
+</button>
+
+<button
+    class="suggestion"
+    data-question="How do I irrigate efficiently during drought?"
+>
+    Efficient irrigation
+</button>
+
+</div>
+
+
+<!-- CHAT -->
+
+<div
+    class="chat"
+    id="chat"
+></div>
+
+
+<!-- INPUT -->
+
+<div class="ai-input-area">
+
+<div class="ai-input">
+
+<textarea
+    id="aiInput"
+    placeholder="Ask FARMERS AI..."
+></textarea>
+
+
+<button
+    id="sendButton"
+    title="Send"
+>
+    ↑
+</button>
+
+</div>
+
+</div>
+
+
+</main>
+
+
+<!-- BOTTOM NAV -->
+
+<nav class="bottom-nav">
+
+<a
+    href="index.html"
+    class="bottom-item"
+>
+
+<span>
+    ⌂
+</span>
+
+<small>
+    Home
+</small>
+
+</a>
+
+
+<a
+    href="farm-hub.html"
+    class="bottom-item"
+>
+
+<span>
+    Farm
+</span>
+
+<small>
+    Farm
+</small>
+
+</a>
+
+
+<a
+    href="marketplace.html"
+    class="bottom-item"
+>
+
+<span>
+    Market
+</span>
+
+<small>
+    Market
+</small>
+
+</a>
+
+
+<a
+    href="agribusiness.html"
+    class="bottom-item"
+>
+
+<span>
+    ▥
+</span>
+
+<small>
+    Business
+</small>
+
+</a>
+
+
+<a
+    href="profile.html"
+    class="bottom-item active"
+>
+
+<span>
+    AI
+</span>
+
+<small>
+    AI
+</small>
+
+</a>
+
+</nav>
+<script>
+
+const state = {
+    liveEnabled: Boolean(localStorage.getItem("farmersAiApiKey")),
+    apiKey: localStorage.getItem("farmersAiApiKey") || "",
+    apiEndpoint: localStorage.getItem("farmersAiApiEndpoint") || "https://api.openai.com/v1/chat/completions",
+    model: localStorage.getItem("farmersAiModel") || "gpt-4o-mini",
+    conversation: [],
+    busy: false
+};
+
+/* =========================
+   FARMERS AI KNOWLEDGE
+========================= */
+
+const knowledge = {
+    cropManagement: `
+Good crop management starts with the right variety, timely planting, soil preparation, and field monitoring. For most crops, focus on:
+
+• Seed quality and variety suited to your region
+• Correct planting time and spacing
+• Good soil fertility and drainage
+• Timely weeding and thinning
+• Water management and irrigation scheduling
+• Pest and disease monitoring
+• Harvest at the right maturity stage
+
+Strong yields usually come from consistent field observation and early action before a small problem becomes a major loss.
+`,
+    maize: `
+For maize production, focus on:
+
+• Quality seed from a reliable source
+• Planting at the right rainfall window
+• Proper row spacing and plant population
+• Balanced nutrition and soil fertility
+• Weed control before canopy closure
+• Pest and disease scouting
+• Timely harvesting to reduce grain losses
+
+Successful maize farming depends on soil health, moisture, and early action against pests and nutrient stress.
+`,
+    soil: `
+Good soil management starts by understanding your soil.
+
+Consider:
+
+• Soil testing for pH, nutrients and organic matter
+• Adding compost or manure to improve structure
+• Correcting pH when needed
+• Managing drainage and erosion
+• Rotating crops to reduce nutrient depletion
+• Cover crops and mulching to conserve moisture
+
+Do not apply fertilizer blindly. The right rate depends on crop needs, soil type, and the actual field condition.
+`,
+    poultry: `
+For poultry farming, plan for:
+
+• Secure housing and ventilation
+• Clean water and balanced feed
+• Vaccination and biosecurity
+• Temperature management
+• Good stocking density
+• Regular cleaning and litter management
+• Health checks and record keeping
+
+Profitability depends on mortality control, feed efficiency, and consistent market access.
+`,
+    livestock: `
+Livestock management generally requires attention to:
+
+• Balanced nutrition and clean water
+• Housing and sanitation
+• Vaccination and disease prevention
+• Breeding and reproductive planning
+• Records on births, growth and treatment
+• Animal welfare and stress management
+• Market timing and pricing
+
+Healthy animals with good records are easier to manage and usually more profitable.
+`,
+    dairy: `
+For dairy farming, the essentials are:
+
+• Quality feed and mineral supplementation
+• Clean water and regular feeding times
+• Milking hygiene and udder health
+• Vaccination and disease control
+• Comfortable housing and shade
+• Heat detection and breeding records
+• Monitoring milk yield and feed cost
+
+Good dairy production depends on animal health and efficient daily management.
+`,
+    fish: `
+Fish farming requires stable water quality and careful planning.
+
+Key points include:
+
+• Water quality testing for oxygen, pH and temperature
+• Stocking density suited to pond capacity
+• Quality feed and regular feeding schedules
+• Disease monitoring and biosecurity
+• Pond cleaning and water exchange
+• Harvest planning and market access
+
+Healthy water and careful feeding are the biggest drivers of fish survival and growth.
+`,
+    profit: `
+A simple farm profit formula is:
+
+Profit = Revenue - Total Costs
+
+Revenue may include crop sales, livestock sales, value-added products, and other income.
+
+Costs can include:
+
+• Seed, feed and fertilizer
+• Labour and transport
+• Veterinary and medicine
+• Fuel, repairs and equipment
+• Rent, water and utilities
+• Packaging and storage
+
+Strong farms track both direct costs and hidden losses such as spoilage, poor timing, and inefficiency.
+`,
+    irrigation: `
+Efficient irrigation should consider:
+
+• Crop water requirement by growth stage
+• Soil type and infiltration rate
+• Weather and evapotranspiration
+• Water availability and scheduling
+• Irrigation method such as drip, sprinkler or furrow
+
+Avoid both under-watering and overwatering. Water stress reduces yield, while excess water can reduce oxygen and increase disease risk.
+`,
+    pests: `
+For pest control, start by identifying the pest correctly.
+
+Integrated pest management is usually the best approach:
+
+• Field monitoring and scouting
+• Correct identification of damage and pest stage
+• Cultural practices such as crop rotation and sanitation
+• Biological control where available
+• Mechanical control such as traps and hand picking
+• Selective and responsible pesticide use
+
+Always read the label and follow local guidance before applying any chemical.
+`,
+    diseases: `
+Crop disease management depends on prevention and early detection.
+
+Common practices include:
+
+• Planting healthy seed and resistant varieties
+• Crop rotation and field sanitation
+• Avoiding overcrowding and poor airflow
+• Managing humidity and moisture
+• Removing infected plants early
+• Using appropriate treatments only when needed
+
+Preventing disease is usually cheaper than trying to rescue a heavily infected field.
+`,
+    market: `
+Before selling farm produce, compare:
+
+• Selling price and buyer reliability
+• Quantity demanded and order frequency
+• Transport and packaging cost
+• Storage and spoilage risks
+• Timing and seasonality
+• Market fees and quality standards
+
+The best price is not always the best profit. A slightly lower price with lower transport and spoilage costs may be more profitable.
+`,
+    fertilizer: `
+Fertilizer decisions should be based on crop needs and, where possible, soil-test results.
+
+Consider:
+
+• Nutrient balance for your crop
+• Application timing and method
+• Soil pH and organic matter levels
+• Availability of compost or manure
+• Moisture conditions at application time
+
+Good nutrition comes from matching the fertilizer to crop demand, not applying a blanket rate everywhere.
+`,
+    greenhouse: `
+Greenhouse farming gives better control over temperature, humidity, irrigation, and pests.
+
+Important factors include:
+
+• Ventilation and temperature control
+• Humidity management
+• Irrigation and nutrient delivery
+• Crop spacing and light distribution
+• Pest monitoring and sanitation
+• Market planning and crop rotation
+
+Greenhouses work best when the grower monitors the environment consistently.
+`,
+    weeds: `
+Weed control matters from planting until crop establishment.
+
+Good weed management includes:
+
+• Early land preparation
+• Timely weeding before competition starts
+• Mulching and cover crops
+• Crop spacing that reduces weed pressure
+• Mechanical removal where practical
+• Selective herbicide use only when needed
+
+Weeds compete for water, nutrients and light, so early control protects yield.
+`,
+    compost: `
+Compost improves soil structure, water holding capacity, and nutrient supply.
+
+Basic compost steps:
+
+• Collect crop residue, manure and plant material
+• Mix with carbon and nitrogen sources
+• Maintain moisture and aeration
+• Turn regularly for even decomposition
+• Use finished compost before planting or top dressing
+
+Quality compost improves soil life and reduces dependency on heavy chemical inputs.
+`,
+    organic: `
+Organic farming focuses on building healthy soil and healthy ecosystems.
+
+Typical practices include:
+
+• Compost and manure use
+• Crop rotation and diversification
+• Mulching and cover crops
+• Biological pest control
+• Reduced synthetic inputs
+• Integrated soil and water management
+
+Organic systems can be productive when planning, soil fertility and pest management are handled well.
+`,
+    climate: `
+Climate-smart farming helps farmers adapt to changing weather patterns.
+
+Good practices include:
+
+• Selecting varieties suited to the local climate
+• Conserving soil moisture during dry spells
+• Using drainage and raised beds in wet zones
+• Timing planting with rainfall patterns
+• Diversifying enterprises to spread risk
+• Keeping records of weather and yield
+
+Climate resilience often comes from flexibility, soil health and careful planning.
+`,
+    agribusiness: `
+A successful agribusiness balances production, cost control and market strategy.
+
+The main questions are:
+
+• What will we produce?
+• What is the expected cost and margin?
+• Who is the buyer?
+• How will we store, process and transport it?
+• What risks can we manage?
+
+Good agribusiness decisions are based on numbers, market knowledge, and realistic production plans.
+`,
+    seeds: `
+Seed selection strongly affects yield, disease tolerance and market value.
+
+Important factors include:
+
+• Adaptability to the local climate
+• Disease and pest resistance
+• Germination quality and vigor
+• Maturity period and harvest window
+• Suitability for your intended market
+
+High-quality seed is one of the cheapest ways to improve productivity.
+`,
+    postharvest: `
+Post-harvest handling protects value and reduces losses.
+
+Key practices include:
+
+• Early harvest at the correct maturity stage
+• Careful grading and sorting
+• Cleaning and drying when needed
+• Safe storage with ventilation or moisture control
+• Protection from insects, rodents and fungi
+• Timely transport to market
+
+Good post-harvest management can increase income without growing more food.
+`,
+    records: `
+Good farm records can include:
+
+• Crop and livestock activity logs
+• Sales and input purchases
+• Labour and transport costs
+• Feed, fertilizer and medicine use
+• Production yields and losses
+• Machinery and repair records
+
+Records help you see what is working, what is losing money, and what decisions to adjust next season.
+`,
+    general: `
+Here is a strong general approach to farming:
+
+1. Understand your land, climate and market.
+2. Choose crops or livestock suited to your area.
+3. Protect soil fertility and water resources.
+4. Monitor pests, diseases and animal health early.
+5. Keep clear records of costs, yields and sales.
+6. Improve efficiency before expanding production.
+7. Match output to market demand and transport capacity.
+
+The most profitable farms are usually the most efficient and the most consistent, not necessarily the biggest.
+`
+};
+
+function findTopic(text) {
+    const q = text.toLowerCase();
+
+    if (q.includes("maize") || q.includes("corn")) return knowledge.maize;
+    if (q.includes("soil") || q.includes("fertility") || q.includes("ph") || q.includes("soil testing")) return knowledge.soil;
+    if (q.includes("poultry") || q.includes("chicken") || q.includes("broiler") || q.includes("layer")) return knowledge.poultry;
+    if (q.includes("cattle") || q.includes("goat") || q.includes("sheep") || q.includes("livestock") || q.includes("cow") || q.includes("bull")) return knowledge.livestock;
+    if (q.includes("dairy") || q.includes("milk") || q.includes("udder")) return knowledge.dairy;
+    if (q.includes("fish") || q.includes("aquaculture") || q.includes("pond")) return knowledge.fish;
+    if (q.includes("profit") || q.includes("revenue") || q.includes("expense") || q.includes("budget") || q.includes("cost")) return knowledge.profit;
+    if (q.includes("irrigation") || q.includes("drip") || q.includes("water") || q.includes("drought")) return knowledge.irrigation;
+    if (q.includes("pest") || q.includes("insect") || q.includes("aphid") || q.includes("termite") || q.includes("armyworm") || q.includes("fall armyworm")) return knowledge.pests;
+    if (q.includes("disease") || q.includes("fungus") || q.includes("blight") || q.includes("rust") || q.includes("mildew")) return knowledge.diseases;
+    if (q.includes("market") || q.includes("sell") || q.includes("price") || q.includes("buyer") || q.includes("demand")) return knowledge.market;
+    if (q.includes("fertilizer") || q.includes("fertiliser") || q.includes("manure") || q.includes("nutrient")) return knowledge.fertilizer;
+    if (q.includes("greenhouse") || q.includes("nursery") || q.includes("polyhouse")) return knowledge.greenhouse;
+    if (q.includes("weed") || q.includes("herbicide")) return knowledge.weeds;
+    if (q.includes("compost") || q.includes("organic matter")) return knowledge.compost;
+    if (q.includes("organic") || q.includes("bio") || q.includes("natural farming")) return knowledge.organic;
+    if (q.includes("climate") || q.includes("rainfall") || q.includes("weather") || q.includes("flood")) return knowledge.climate;
+    if (q.includes("agribusiness") || q.includes("enterprise") || q.includes("business plan") || q.includes("startup")) return knowledge.agribusiness;
+    if (q.includes("seed") || q.includes("variety") || q.includes("germination")) return knowledge.seeds;
+    if (q.includes("harvest") || q.includes("storage") || q.includes("post harvest") || q.includes("grain loss")) return knowledge.postharvest;
+    if (q.includes("record") || q.includes("bookkeeping") || q.includes("logs") || q.includes("inventory")) return knowledge.records;
+    if (q.includes("crop") || q.includes("plant") || q.includes("yield") || q.includes("farm") || q.includes("field")) return knowledge.cropManagement;
+
+    return knowledge.general;
+}
+
+function buildFriendlyReply(question) {
+    const text = question.trim();
+    const lower = text.toLowerCase();
+
+    if (!text) {
+        return "Please ask a farming question and I will help with a practical answer.";
+    }
+
+    if (lower.includes("hello") || lower.includes("hi") || lower.includes("hey")) {
+        return "Hello! I can help with crop production, soil health, irrigation, livestock, poultry, dairy, fish, farm records, pest management, markets, and agribusiness decisions. What would you like to know about your farm?";
+    }
+
+    if (lower.includes("thank")) {
+        return "You are welcome. Keep tracking your costs, monitor your field early, and make decisions based on real farm data and local conditions.";
+    }
+
+    const topicReply = findTopic(text);
+    if (topicReply) {
+        return topicReply;
+    }
+
+    if (lower.includes("how") || lower.includes("what") || lower.includes("why") || lower.includes("when") || lower.includes("can")) {
+        return "A practical general answer is to start by checking your land, climate, crop choice, soil fertility, and market demand. Then focus on water management, pest control, record keeping, and cost control before expanding production. The biggest gains usually come from better timing, better field health, and less waste.";
+    }
+
+    return "The strongest farming approach is to choose a crop or enterprise that matches your climate and market, protect your soil and water, monitor pests and diseases early, and keep good records of every input and sale. That combination is the foundation of productive and profitable farming.";
+}
+
+async function callLiveAi() {
+    if (!state.liveEnabled || !state.apiKey) {
+        return null;
+    }
+
+    const response = await fetch(state.apiEndpoint, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${state.apiKey}`
+        },
+        body: JSON.stringify({
+            model: state.model,
+            messages: [
+                {
+                    role: "system",
+                    content: "You are FARMERS AI, a careful, helpful agricultural assistant. Answer the user's actual question directly and specifically; do not repeat generic advice or previous answers. Use the conversation history to understand follow-up questions and avoid repeating yourself. Explain uncertainty, never invent facts, diagnoses, pesticide doses, prices, or local regulations. Ask a focused clarifying question when crop/animal, location, growth stage, symptoms, or other essential details are missing. For potentially harmful crop-protection or animal-health decisions, give safe general steps and recommend a local extension officer or veterinarian when appropriate. Keep answers clear and practical. If useful, organize the reply as: likely explanation, actions to take, and what details to check next."
+                },
+                ...state.conversation.slice(-20)
+            ],
+            temperature: 0.4
+        })
+    });
+
+    if (!response.ok) {
+        let detail = "";
+        try {
+            const errorData = await response.json();
+            detail = errorData.error && errorData.error.message
+                ? `: ${errorData.error.message}`
+                : "";
+        } catch (error) {
+            detail = "";
+        }
+        throw new Error(`Live AI request failed (${response.status})${detail}`);
+    }
+
+    const data = await response.json();
+    const answer = data && data.choices && data.choices[0] &&
+        data.choices[0].message && data.choices[0].message.content;
+    if (typeof answer !== "string" || !answer.trim()) {
+        throw new Error("The AI service returned an empty answer.");
+    }
+    return answer.trim();
+}
+
+async function generateResponse(question) {
+    if (state.liveEnabled && state.apiKey) {
+        return callLiveAi();
+    }
+
+    const reply = buildFriendlyReply(question);
+    const previousReply = [...state.conversation]
+        .reverse()
+        .find((message) => message.role === "assistant");
+    if (previousReply && previousReply.content.trim() === reply.trim()) {
+        return "I already shared my general guidance on that. To give you a more specific answer, tell me your location, the crop or animal, its growth stage, and what you have observed so far.";
+    }
+    return reply;
+}
+
+const chat = document.getElementById("chat");
+const input = document.getElementById("aiInput");
+const sendButton = document.getElementById("sendButton");
+const welcome = document.getElementById("welcome");
+const newChatButton = document.getElementById("newChatButton");
+const liveModeButton = document.getElementById("liveModeButton");
+const apiConfig = document.getElementById("apiConfig");
+const apiKeyInput = document.getElementById("apiKeyInput");
+const apiEndpointInput = document.getElementById("apiEndpointInput");
+const modelInput = document.getElementById("modelInput");
+const saveApiButton = document.getElementById("saveApiButton");
+const sharedMessage = new URLSearchParams(location.search).get("shared");
+
+if (sharedMessage) {
+    input.value = "Help me respond to or discuss this FARMERS community message:\n\n" + sharedMessage;
+}
+
+if (state.apiKey) {
+    apiKeyInput.value = state.apiKey;
+}
+
+if (state.apiEndpoint) {
+    apiEndpointInput.value = state.apiEndpoint;
+}
+
+modelInput.value = state.model;
+
+function addMessage(text, type) {
+    welcome.style.display = "none";
+    const message = document.createElement("div");
+    message.className = "message " + type;
+    message.textContent = String(text).trim();
+    chat.appendChild(message);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+}
+
+function showTyping() {
+    const typing = document.createElement("div");
+    typing.id = "typing";
+    typing.className = "typing ai";
+    typing.textContent = "FARMERS AI is thinking...";
+    chat.appendChild(typing);
+}
+
+function removeTyping() {
+    const typing = document.getElementById("typing");
+    if (typing) typing.remove();
+}
+
+async function sendMessage() {
+    const question = input.value.trim();
+    if (!question || state.busy) {
+        return;
+    }
+
+    state.busy = true;
+    sendButton.disabled = true;
+    addMessage(question, "user");
+    state.conversation.push({ role: "user", content: question });
+    state.conversation = state.conversation.slice(-20);
+    input.value = "";
+    showTyping();
+
+    try {
+        const response = await generateResponse(question);
+        removeTyping();
+        addMessage(response, "ai");
+        state.conversation.push({ role: "assistant", content: response });
+        state.conversation = state.conversation.slice(-20);
+        saveConversation();
+    } catch (error) {
+        removeTyping();
+        state.conversation.pop();
+        const message = error instanceof Error ? error.message : "The AI service is temporarily unavailable.";
+        const creditsExhausted = /429/.test(message) && /credit|billing|quota/i.test(message);
+
+        if (creditsExhausted) {
+            const offlineAnswer = buildFriendlyReply(question);
+            addMessage(
+                `Live AI is unavailable because this API account has no credits remaining. Add credits to the API account's billing page to restore live answers. For now, here is limited built-in guidance; it may not cover your specific situation:\n\n${offlineAnswer}`,
+                "ai"
+            );
+            const billingLink = document.createElement("a");
+            billingLink.href = "https://platform.openai.com/settings/organization/billing/";
+            billingLink.target = "_blank";
+            billingLink.rel = "noopener noreferrer";
+            billingLink.textContent = "Open OpenAI billing";
+            billingLink.style.cssText = "display:inline-block;margin-top:8px;color:var(--emerald);";
+            chat.lastElementChild.appendChild(billingLink);
+        } else {
+            addMessage(`${message} Check your live model settings or try again shortly.`, "ai");
+        }
+    } finally {
+        state.busy = false;
+        sendButton.disabled = false;
+    }
+}
+
+sendButton.addEventListener("click", sendMessage);
+
+input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+document.querySelectorAll(".suggestion").forEach((button) => {
+    button.addEventListener("click", () => {
+        input.value = button.dataset.question;
+        sendMessage();
+    });
+});
+
+newChatButton.addEventListener("click", () => {
+    chat.innerHTML = "";
+    welcome.style.display = "block";
+    localStorage.removeItem("farmersAIChat");
+    localStorage.removeItem("farmersAIConversation");
+    state.conversation = [];
+});
+
+liveModeButton.addEventListener("click", () => {
+    apiConfig.style.display = apiConfig.style.display === "none" ? "block" : "none";
+});
+
+saveApiButton.addEventListener("click", () => {
+    const apiKey = apiKeyInput.value.trim();
+    const endpoint = apiEndpointInput.value.trim() || "https://api.openai.com/v1/chat/completions";
+    const model = modelInput.value.trim() || "gpt-4o-mini";
+
+    if (!apiKey) {
+        state.liveEnabled = false;
+        state.apiKey = "";
+        localStorage.removeItem("farmersAiApiKey");
+        localStorage.removeItem("farmersAiApiEndpoint");
+        localStorage.removeItem("farmersAiModel");
+        updateAIStatus();
+        alert("Live AI is disabled until you add an API key. Local answers are limited and may not cover every question.");
+        return;
+    }
+
+    state.liveEnabled = true;
+    state.apiKey = apiKey;
+    state.apiEndpoint = endpoint;
+    state.model = model;
+    localStorage.setItem("farmersAiApiKey", apiKey);
+    localStorage.setItem("farmersAiApiEndpoint", endpoint);
+    localStorage.setItem("farmersAiModel", model);
+    apiConfig.style.display = "none";
+    updateAIStatus();
+    addMessage("Live model settings saved. FARMERS AI will use the configured model for your next question. Answers can still be imperfect; verify important farm, veterinary, chemical, and regulatory decisions locally.", "ai");
+});
+
+function updateAIStatus() {
+    const status = document.getElementById("statusText");
+    const mode = document.getElementById("aiMode");
+
+    if (navigator.onLine) {
+        status.textContent = "Online";
+        mode.textContent = state.liveEnabled ? "LIVE AI READY" : "LOCAL KNOWLEDGE";
+    } else {
+        status.textContent = "Offline";
+        mode.textContent = "LOCAL KNOWLEDGE";
+    }
+}
+
+updateAIStatus();
+window.addEventListener("online", updateAIStatus);
+window.addEventListener("offline", updateAIStatus);
+
+function saveChat() {
+    localStorage.setItem("farmersAIChat", chat.innerHTML);
+}
+
+function saveConversation() {
+    localStorage.setItem("farmersAIConversation", JSON.stringify(state.conversation));
+}
+
+function loadChat() {
+    const saved = localStorage.getItem("farmersAIChat");
+    if (saved) {
+        chat.innerHTML = saved;
+        welcome.style.display = "none";
+    }
+
+    try {
+        const storedConversation = localStorage.getItem("farmersAIConversation");
+        const savedConversation = storedConversation
+            ? JSON.parse(storedConversation)
+            : Array.from(chat.querySelectorAll(".message.user, .message.ai")).map((message) => ({
+                role: message.classList.contains("user") ? "user" : "assistant",
+                content: message.textContent || ""
+            }));
+        if (Array.isArray(savedConversation)) {
+            state.conversation = savedConversation
+                .filter((message) =>
+                    message &&
+                    (message.role === "user" || message.role === "assistant") &&
+                    typeof message.content === "string"
+                )
+                .slice(-20);
+        }
+    } catch (error) {
+        state.conversation = [];
+    }
+}
+
+loadChat();
+const observer = new MutationObserver(saveChat);
+observer.observe(chat, { childList: true });
+</script>
+<script src="plan-access.js"></script>
+
+<footer style="margin:32px auto 0;padding:20px 12px 90px;border-top:1px solid rgba(0,200,120,.18);text-align:center;color:#a0b1a6;font:12px Arial,sans-serif;">
+    Contact:
+    <a style="color:#00c878;" href="mailto:farmersrevolutionarysystem@gmail.com">farmersrevolutionarysystem@gmail.com</a>
+</footer>
+
+</body>
+
+</html>
